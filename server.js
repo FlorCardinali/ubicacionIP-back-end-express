@@ -18,10 +18,7 @@ const allowedOrigins = [
     'http://localhost:5173' 
 ];
 
-app.use(cors({
-    origin: NETLIFY_DOMAIN,
-    methods: ['GET'],
-}));
+app.use(cors());
 app.use(express.json()); 
 
 app.get('/api/localizar/:direccionIP', async (req, res) => {
