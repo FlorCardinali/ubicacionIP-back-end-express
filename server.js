@@ -7,8 +7,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const CLAVE_IP_LOCATION = process.env.CLAVE_IP_LOCATION; 
-const NETLIFY_DOMAIN = process.env.DOMINIO_NETLIFY || 'http://localhost:5173';
-
+const NETLIFY_DOMAIN = 'https://ubicacion-ip.netlify.app';
 const URL_API_LOCATION = 'https://ipwho.is/';
 
 const allowedOrigins = [
@@ -18,7 +17,11 @@ const allowedOrigins = [
     'http://localhost:5173' 
 ];
 
-app.use(cors());
+app.use(cors({
+    origin: NETLIFY_DOMAIN, 
+    methods: ['GET'], 
+    optionsSuccessStatus: 204 
+}));
 app.use(express.json()); 
 
 app.get('/api/localizar/:direccionIP', async (req, res) => {
