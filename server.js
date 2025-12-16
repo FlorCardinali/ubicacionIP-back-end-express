@@ -62,5 +62,5 @@ app.get('/api/localizar/:direccionIP', async (req, res) => {
 
 
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor Express corriendo en http://localhost:${PORT}`);
+    console.log(`🚀 Servidor Express corriendo en ${PORT}`);
 });
