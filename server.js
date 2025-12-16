@@ -17,9 +17,9 @@ app.use(express.json());
 app.get('/api/localizar/:direccionIP', async (req, res) => {
     const { direccionIP } = req.params;
 
-    // if (!CLAVE_IP_LOCATION) {
-    //     return res.status(500).json({ error: 'Falta la clave de IP Location en el servidor.' });
-    // }
+    if (!CLAVE_IP_LOCATION) {
+         return res.status(500).json({ error: 'Falta la clave de IP Location en el servidor.' });
+    }
 
     try {
         const urlCompleta  = `${URL_API_LOCATION}${direccionIP}?apikey=${CLAVE_IP_LOCATION}`;
