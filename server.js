@@ -11,7 +11,25 @@ const DOMINIO_NETLIFY = process.env.DOMINIO_NETLIFY || 'http://localhost:5173';
 
 const URL_API_LOCATION = 'https://ipwho.is/';
 
-app.use(cors({ origin: DOMINIO_NETLIFY })); 
+const allowedOrigins = [
+    // La URL pública de tu frontend en Netlify (¡DEBE SER HTTPS!)
+    'https://tu-dominio-de-netlify.netlify.app', 
+    // Si necesitas probar localmente
+    'http://localhost:5173' 
+];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Permitir solicitudes sin origen (como las de postman o del mismo servidor)
+        if (!origin) return callback(null, true); 
+        
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'La política CORS para este sitio no permite el acceso desde el Origen especificado.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    }
+}));
 app.use(express.json()); 
 
 app.get('/api/localizar/:direccionIP', async (req, res) => {
