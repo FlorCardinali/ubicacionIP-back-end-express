@@ -7,28 +7,20 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const CLAVE_IP_LOCATION = process.env.CLAVE_IP_LOCATION; 
-const DOMINIO_NETLIFY = process.env.DOMINIO_NETLIFY || 'http://localhost:5173';
+const NETLIFY_DOMAIN = process.env.DOMINIO_NETLIFY || 'http://localhost:5173';
 
 const URL_API_LOCATION = 'https://ipwho.is/';
 
 const allowedOrigins = [
     // La URL pública de tu frontend en Netlify (¡DEBE SER HTTPS!)
-    'https://tu-dominio-de-netlify.netlify.app', 
+    "https://ubicacion-ip.netlify.app/", 
     // Si necesitas probar localmente
     'http://localhost:5173' 
 ];
 
 app.use(cors({
-    origin: (origin, callback) => {
-        // Permitir solicitudes sin origen (como las de postman o del mismo servidor)
-        if (!origin) return callback(null, true); 
-        
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'La política CORS para este sitio no permite el acceso desde el Origen especificado.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    }
+    origin: NETLIFY_DOMAIN,
+    methods: ['GET'],
 }));
 app.use(express.json()); 
 
